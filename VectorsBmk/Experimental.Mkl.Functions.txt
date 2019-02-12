@@ -1,0 +1,9 @@
+cblas_daxpy
+cblas_dcopy
+cblas_dscal
+cblas_daxpby
+MKL_Dimatcopy
+MKL_Domatcopy
+MKL_Domatcopy2
+MKL_Domatadd
+vdAdd
