@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
-        <TargetFrameworks>net461;netcoreapp2.1</TargetFrameworks>
+        <TargetFrameworks>net461;netcoreapp2.1;netcoreapp3.1</TargetFrameworks>
     </PropertyGroup>
 
     <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
@@ -20,16 +20,18 @@
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="BenchmarkDotNet" Version="0.11.3" />
-      <PackageReference Include="System.Memory" Version="4.5.2" />
+      <PackageReference Include="BenchmarkDotNet" Version="0.12.1" />
+      <PackageReference Include="System.Memory" Version="4.5.4" />
+      <PackageReference Remove="System.ValueTuple" />
+      <PackageReference Include="System.ValueTuple" Version="4.5.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Content Include="BuildMkl.bat" />
-      <None Include="Experimental.Mkl.dll">
-        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      </None>
-      <Content Include="Experimental.Mkl.Functions.txt" />
+        <Content Include="BuildMkl.bat" />
+        <None Include="Experimental.Mkl.dll">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </None>
+        <Content Include="Experimental.Mkl.Functions.txt" />
     </ItemGroup>
 
 </Project>

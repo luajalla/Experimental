@@ -6,9 +6,6 @@
 *.user
 *.sln.docstates
 
-# JetBrains Rider
-.idea/
-
 # Xamarin Studio / monodevelop user-specific
 *.userprefs
 *.dll.mdb
@@ -186,3 +183,10 @@ docsrc/content/license.md
 docsrc/content/release-notes.md
 .fake
 docsrc/tools/FSharp.Formatting.svclog
+
+
+# Various
+mkl/
+.idea
+BenchmarkResults*
+Experimental.Mkl.dll

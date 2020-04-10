@@ -4,6 +4,7 @@ open System
 open System.Numerics
 open System.Runtime.InteropServices
 open BenchmarkDotNet.Attributes
+open BenchmarkDotNet.Jobs
 
 
 /// Functions to perform multiply-add operations in two forms:
@@ -32,7 +33,7 @@ module MultiplyAdd =
     /// Out of place, arrays are not aligned, vector multiplier and inputs are not spans.    
     let vectorNotAlignedOut (a : double) (xs : double[]) (ys : double[]) (zs : double[]) =
         let nAligned = lengthAlignedLeq xs.Length
-        let zsVector = MemoryMarshal.Cast<double, Vector<double>>(Span<double>(xs, 0, nAligned))
+        let zsVector = MemoryMarshal.Cast<double, Vector<double>>(Span<double>(zs, 0, nAligned))
         let aVector  = Vector(a)
         let v        = Vector<double>.Count
         
@@ -46,7 +47,7 @@ module MultiplyAdd =
 
     /// Out of place, arrays are aligned, scalar multiplier and inputs are not spans.
     let vectorScalarOut (a : double) (xs : double[]) (ys : double[]) (zs : double[]) =
-        let zsVector = MemoryMarshal.Cast<double, Vector<double>>(Span<double>(xs))
+        let zsVector = MemoryMarshal.Cast<double, Vector<double>>(Span<double>(zs))
         let v        = Vector<double>.Count
         
         for i = 0 to zsVector.Length - 1 do
@@ -67,7 +68,7 @@ module MultiplyAdd =
     
     /// Out of place, arrays are aligned, vector multiplier and inputs are not spans.
     let vectorOut (a : double) (xs : double[]) (ys : double[]) (zs : double[]) =
-        let zsVector = MemoryMarshal.Cast<double, Vector<double>>(Span<double>(xs))
+        let zsVector = MemoryMarshal.Cast<double, Vector<double>>(Span<double>(zs))
         let aVector  = Vector(a)
         let v        = Vector<double>.Count
             
@@ -155,7 +156,9 @@ module TestInputs =
 
 [<AllStatisticsColumn>]
 [<DisassemblyDiagnoser; MemoryDiagnoser>]
-[<ClrJob; CoreJob(baseline = true)>]
+[<SimpleJob(RuntimeMoniker.NetCoreApp21);
+  SimpleJob(RuntimeMoniker.NetCoreApp31, baseline=true);
+  SimpleJob(RuntimeMoniker.Net461)>]
 type MultiplyAddVectorMiniBmk() =
     let mutable xsNotAligned = Unchecked.defaultof<_>
     let mutable ysNotAligned = Unchecked.defaultof<_>
@@ -204,7 +207,9 @@ type MultiplyAddVectorMiniBmk() =
 
 [<AllStatisticsColumn>]
 [<DisassemblyDiagnoser; MemoryDiagnoser>]
-[<ClrJob; CoreJob(baseline = true)>]
+[<SimpleJob(RuntimeMoniker.NetCoreApp21);
+  SimpleJob(RuntimeMoniker.NetCoreApp31, baseline=true);
+  SimpleJob(RuntimeMoniker.Net461)>]
 type AddMklMiniBmk() =
     let mutable xs = Unchecked.defaultof<_>
     let mutable ys = Unchecked.defaultof<_>
@@ -232,7 +237,9 @@ type AddMklMiniBmk() =
     
 [<AllStatisticsColumn>]
 [<DisassemblyDiagnoser; MemoryDiagnoser>]
-[<ClrJob; CoreJob(baseline = true)>]
+[<SimpleJob(RuntimeMoniker.NetCoreApp21);
+  SimpleJob(RuntimeMoniker.NetCoreApp31, baseline=true);
+  SimpleJob(RuntimeMoniker.Net461)>]
 type MultiplyAddMklMiniBmk() =
     let mutable xs = Unchecked.defaultof<_>
     let mutable ys = Unchecked.defaultof<_>
@@ -274,7 +281,9 @@ type MultiplyAddMklMiniBmk() =
     
 [<AllStatisticsColumn>]
 [<DisassemblyDiagnoser; MemoryDiagnoser>]
-[<ClrJob; CoreJob(baseline = true)>]
+[<SimpleJob(RuntimeMoniker.NetCoreApp21);
+  SimpleJob(RuntimeMoniker.NetCoreApp31, baseline=true);
+  SimpleJob(RuntimeMoniker.Net461)>]
 type MultiplyAddBmk() =
     let mutable xs = Unchecked.defaultof<_>
     let mutable ys = Unchecked.defaultof<_>
